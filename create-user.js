@@ -74,6 +74,7 @@ async function createUserInDB(username, email, password){
 
 /*
 (async () => {
-    return await createUserInDB('johnny6', 'johnny6@test.com', 'doggiez!').catch((err) => { console.error(err.detail) })
+    return await createUserInDB('johnny7', 'johnny7@test.com', 'doggiez!').catch((err) => { console.error(err.detail) })
 })()
 */
+module.exports = createUserInDB
