@@ -13,28 +13,29 @@ function generatePassword(password, saltLen=32, iter=50000, keyLen=256, digest='
     
     this.exportedAuth = {} // object will be populated with salt and hash once computed
     return randomBytesAsync(saltLen)
-            .then((buffer) => {
-                let salt = buffer.toString('hex')
-                console.log(`The salt is: ${ salt }\n`) // logs salt correctly
+            .then((randomBytes) => {
+                let salt = randomBytes.toString('hex')
+                //console.log(`The salt is: ${ salt }\n`) // logs salt correctly
                 this.exportedAuth.salt = salt                
                 return pbkdf2Async(password, salt, iter, keyLen, digest)
             })
             .then((hash) => {
                 hash = hash.toString('hex')
-                console.log(`The hash is: ${ hash }\n`) // logs hash correctly
+                //console.log(`The hash is: ${ hash }\n`) // logs hash correctly
                 this.exportedAuth.hash = hash
-                console.log(this.exportedAuth) // logs {salt: 'XXXX', hash: 'XXXX'}
-                // exportedAuth object can be awaited by other code to insert into a DB
+                //console.log(this.exportedAuth) // logs {salt: 'XXXX', hash: 'XXXX'}
+                return this.exportedAuth
             })
             .catch((err) => {
                 console.error(err)
             })
 }
 
-generatePassword('sup3r_s3cur3')
+/*
+(async () => {
+    console.log(await generatePassword('cowz'))
+})()
+*/
 
 
-
-module.exports = {
-    generatePassword
-}
+module.exports = generatePassword
